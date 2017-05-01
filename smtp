@@ -1,0 +1,24 @@
+from email.mime.text import MIMEText
+import smtplib
+from email.header import Header
+msg = MIMEText('<html><body><h1>Hello</h1>' +
+'<p>send by <a href="http://www.python.org">Python</a>...</p>' +
+'</body></html>', 'html', 'utf-8')
+# 输入Email地址和口令:
+from_addr = '@163.com'
+password = ''
+# 输入收件人地址:
+to_addr = '@qq.com'
+# 输入SMTP服务器地址:
+smtp_server = 'smtp.163.com'
+server = smtplib.SMTP(smtp_server, 25) # SMTP协议默认端口是25
+#打印与stmp服务器交互信息
+server.set_debuglevel(1)
+server.login(from_addr, password)
+
+msg['Subject'] = Header('text', 'utf-8')  # subject
+msg['From'] = from_addr
+msg['To'] = to_addr
+
+server.sendmail(from_addr, to_addr, msg.as_string())
+server.quit()
